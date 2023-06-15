@@ -19,7 +19,8 @@
             <input type="submit" name="action" value="Login" />
             <input type="reset" value="Reset" />
         </form>
-        <a href="MainController?action=CreatePage">Create User</a>
+        <a href="MainController?action=CreatePage">Create User</a><br/>
+        <a href="MainController?action=ShoppingPage">Tien's Farm</a>
         <%
             String error = (String)request.getAttribute("ERROR");
             if (error == null) {

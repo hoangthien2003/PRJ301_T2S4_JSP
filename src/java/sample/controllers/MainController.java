@@ -32,6 +32,18 @@ public class MainController extends HttpServlet {
     private static final String CREATE_PAGE_VIEW = "create.html";
     private static final String CREATE = "Create";
     private static final String CREATE_CONTROLLER = "CreateController";
+    private static final String LOGOUT = "Logout";
+    private static final String LOGOUT_CONTROLLER = "LogoutController";
+    private static final String SHOPPING_PAGE = "ShoppingPage";
+    private static final String SHOPPING_PAGE_VIEW = "shopping.html";
+    private static final String ADD = "Add";
+    private static final String ADD_CONTROLLER = "AddController";
+    private static final String VIEW = "View";
+    private static final String VIEW_PAGE = "view_cart.jsp";
+    private static final String REMOVE = "Remove";
+    private static final String REMOVE_CONTROLLER = "RemoveController";
+    private static final String EDIT = "Edit";
+    private static final String EDIT_CONTROLLER = "EditController";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,6 +65,18 @@ public class MainController extends HttpServlet {
                 url = CREATE_PAGE_VIEW;
             } else if (CREATE.equals(action)) {
                 url = CREATE_CONTROLLER;
+            } else if (LOGOUT.equals(action)) {
+                url = LOGOUT_CONTROLLER;
+            } else if (SHOPPING_PAGE.equals(action)) {
+                url = SHOPPING_PAGE_VIEW;
+            } else if (ADD.equals(action)) {
+                url = ADD_CONTROLLER;
+            } else if (VIEW.equals(action)) {
+                url = VIEW_PAGE;
+            } else if (REMOVE.equals(action)) {
+                url = REMOVE_CONTROLLER;
+            } else if (EDIT.equals(action)) {
+                url = EDIT_CONTROLLER;
             }
         } catch(Exception e) {
             log("Error at MainController: " + e.toString());
