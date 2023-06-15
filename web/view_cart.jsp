@@ -67,11 +67,14 @@
             </tbody>
         </table>
             <h1>Total: <%= total %></h1>
-
+        <a href="shopping.html">Add more</a>
+        <form action="MainController" method="POST">
+            <input type="hidden" name="total" value="<%= total %>" />
+            <input type="submit" name="action" value="Checkout" />
+        </form>
         <%
                 }
             }
         %>
-        <a href="shopping.html">Add more</a>
     </body>
 </html>
