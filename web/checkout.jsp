@@ -9,16 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Checkout</title>
+        <title>Checkout Page</title>
     </head>
     <body>
         <%
             String error = (String)request.getAttribute("ERROR");
-            if (error == null) error = "";
-            String message = (String)request.getAttribute("MESSAGE");
-            if (message == null) message = "Something wrong!";
+            if (error == null) {
+                String message = (String)request.getAttribute("MESSAGE");
+        %>      
+                <h1><%= message %></h1>
+                <a href="MainController?action=ShoppingPage">Buy more</a>
+        <%
+            } 
+            else {
         %>
-        <h1><%= error %></h1>
-        <h1><%= message %></h1>
+                <h1><%= error %></h1>
+        <%
+            }
+        %>
+        
     </body>
 </html>

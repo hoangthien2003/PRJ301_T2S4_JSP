@@ -19,9 +19,10 @@ import sample.utils.DBUtils;
  */
 public class TeaDAO {
     private static final String GET_ALL_TEA = "SELECT * FROM tblProducts";
-    private static final String QUANTITY = "SELECT quantity FROM tblProducts WHERE name = ?";
+    private static final String QUANTITY = "SELECT quantity FROM tblProducts WHERE productID = ?";
     private static final String INSERT_ORDER = "INSERT INTO tblOrders(orderID, userID, date, total) VALUES(?,?,?,?)";
     private static final String INSERT_ORDER_DETAIL = "INSERT INTO tblOrderDetails(orderDetailID, orderID, productID, price, quantity) VALUES(?,?,?,?,?)";
+    private static final String UPDATE_QUANTITY = "UPDATE tblProducts SET quantity = ? WHERE productID = ?";
     
     public List<Tea> getAllTea() throws SQLException {
         List<Tea> listTea = new ArrayList<>();
@@ -49,9 +50,9 @@ public class TeaDAO {
         }
         return listTea;
     }
-
-    public boolean checkSoldOut(String name, int quantityCart) throws SQLException {
-        boolean check = false;
+    
+    public int getQuantity(String teaID) throws SQLException {
+        int quantity = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -59,12 +60,10 @@ public class TeaDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(QUANTITY);
-                ptm.setString(1, name);
+                ptm.setString(1, teaID);
                 rs = ptm.executeQuery();
                 while(rs.next()) {
-                    int quantityDB = rs.getInt("quantity");
-                    if (quantityDB - quantityCart < 0) check = true;
-                    else check = false;
+                    quantity = rs.getInt("quantity");
                 }
             }
         } catch (Exception e) {
@@ -73,6 +72,13 @@ public class TeaDAO {
             if (ptm != null) ptm.close();
             if (conn != null) conn.close();
         }
+        return quantity;
+    }
+
+    public boolean checkSoldOut(String teaID, int quantityCart) throws SQLException {
+        boolean check = false;
+        int quantityDB = getQuantity(teaID);
+        if (quantityDB - quantityCart < 0) check = true;
         return check;
     }
 
@@ -114,6 +120,30 @@ public class TeaDAO {
                 ptm.setString(3, orderDetailDTO.getProductID());
                 ptm.setDouble(4, orderDetailDTO.getPrice());
                 ptm.setInt(5, orderDetailDTO.getQuantity());
+                check = ptm.executeUpdate()>0 ? true : false;
+            }
+        } catch (Exception e) {
+        } finally {
+            if (rs != null) rs.close();
+            if (ptm != null) ptm.close();
+            if (conn != null) conn.close();
+        }
+        return check;
+    }
+
+    public boolean updateQuantity(String teaID, int quantityCart) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UPDATE_QUANTITY);
+                int quantityDB = getQuantity(teaID);
+                int quantityUpdate = quantityDB - quantityCart;
+                ptm.setInt(1, quantityUpdate);
+                ptm.setString(2, teaID);
                 check = ptm.executeUpdate()>0 ? true : false;
             }
         } catch (Exception e) {

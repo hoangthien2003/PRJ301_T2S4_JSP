@@ -45,7 +45,7 @@ public class CheckoutController extends HttpServlet {
             } else {
                 boolean isSoldOut = false;
                 for (Tea tea : cart.getCart().values()) {
-                    isSoldOut = teaDAO.checkSoldOut(tea.getName().trim(), tea.getQuantity());
+                    isSoldOut = teaDAO.checkSoldOut(tea.getId().trim(), tea.getQuantity());
                     if (isSoldOut) {
                         request.setAttribute("ERROR", tea.getName() + " is sold out! Check again");
                     }
@@ -63,6 +63,7 @@ public class CheckoutController extends HttpServlet {
                     boolean isInsertOrder = teaDAO.insertOrder(new OrderDTO(orderID, userID, date, total));
                     if (isInsertOrder) {
                         boolean isInsertDetail = false;
+                        boolean isUpdate = false;
                         for (Tea tea : cart.getCart().values()) {
                             uuid = UUID.randomUUID();
                             String orderDetailID = uuid.toString();
@@ -70,10 +71,11 @@ public class CheckoutController extends HttpServlet {
                             double price = tea.getPrice();
                             int quantity = tea.getQuantity();
                             isInsertDetail = teaDAO.insertOrderDetail(
-                                    new OrderDetailDTO(orderDetailID, orderID, productID, price, quantity));
-                            
-                        } 
-                        if (isInsertDetail) {
+                                    new OrderDetailDTO(orderDetailID, orderID, productID, price, quantity)
+                            );
+                            isUpdate = teaDAO.updateQuantity(tea.getId(), tea.getQuantity());
+                        }
+                        if (isInsertDetail && isUpdate) {
                             request.setAttribute("MESSAGE", "Checkout successfully!");
                             url = SUCCESS;
                         }
