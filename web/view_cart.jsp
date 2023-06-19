@@ -44,7 +44,6 @@
                    <tr>
                     <td><%= count++ %></td>
                     <td>
-                        <%= tea.getId() %>
                         <input type="text" name="id" value="<%= tea.getId() %>" />
                     </td>
                     <td><%= tea.getName() %></td>

@@ -44,13 +44,15 @@ public class CheckoutController extends HttpServlet {
                 request.setAttribute("ERROR", "Cart is empty!");
             } else {
                 boolean isSoldOut = false;
+                boolean isError = false;
                 for (Tea tea : cart.getCart().values()) {
                     isSoldOut = teaDAO.checkSoldOut(tea.getId().trim(), tea.getQuantity());
                     if (isSoldOut) {
                         request.setAttribute("ERROR", tea.getName() + " is sold out! Check again");
+                        isError = true;
                     }
                 }
-                if (!isSoldOut) {
+                if (isError) {
                     UUID uuid = UUID.randomUUID();
                     String orderID = uuid.toString();
                     UserDTO loginUser = (UserDTO)session.getAttribute("LOGIN_USER");
@@ -77,6 +79,7 @@ public class CheckoutController extends HttpServlet {
                         }
                         if (isInsertDetail && isUpdate) {
                             request.setAttribute("MESSAGE", "Checkout successfully!");
+                            cart.setCart(null);
                             url = SUCCESS;
                         }
                     }

@@ -21,9 +21,9 @@
                 return;
             }
         %>
-        User ID: <%= loginUser.getUserID()%><br/>
-        Full Name: <%= loginUser.getFullName()%><br/>
-        Role ID: <%= loginUser.getRoleID()%><br/>
-        Password: <%= loginUser.getPassword()%><br/>
+        User ID: ${sessionScope.LOGIN_USER.userID}<br/>
+        Full Name: ${sessionScope.LOGIN_USER.fullName}<br/>
+        Role ID: ${sessionScope.LOGIN_USER.roleID}<br/>
+        Password: ${sessionScope.LOGIN_USER.password}<br/>
     </body>
 </html>

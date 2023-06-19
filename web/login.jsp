@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login Page</title>
     </head>
     <body>
         Input your information:
@@ -21,12 +21,6 @@
         </form>
         <a href="MainController?action=CreatePage">Create User</a><br/>
         <a href="MainController?action=ShoppingPage">Tien's Farm</a>
-        <%
-            String error = (String)request.getAttribute("ERROR");
-            if (error == null) {
-                error = "";
-            }
-        %>
-        <%= error%>
+        ${requestScope.ERROR}
     </body>
 </html>

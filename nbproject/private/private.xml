@@ -4,7 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Study/PRJ301/PRJ301_T2S4_JSP/web/shopping.html</file>
-            <file>file:/D:/Study/PRJ301/PRJ301_T2S4_JSP/web/css/shopping.css</file>
+            <file>file:/D:/Study/PRJ301/PRJ301_T2S4_JSP/src/java/sample/controllers/CheckoutController.java</file>
+            <file>file:/D:/Study/PRJ301/PRJ301_T2S4_JSP/src/java/sample/shopping/TeaDAO.java</file>
         </group>
     </open-files>
 </project-private>

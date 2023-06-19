@@ -29,7 +29,7 @@
             Search<input type="text" name="search" value="<%=search%>"/>
             <input type="submit" name="action" value="Search" />
         </form>
-            <a href="MainController?action=Logout">Logout</a>
+        <a href="MainController?action=Logout">Logout</a>
         <%
             List<UserDTO> listUser = (List<UserDTO>)request.getAttribute("LIST_USER");
             if (listUser != null) {
@@ -80,13 +80,7 @@
                             
                         </tbody>
                     </table>
-                             <%
-                        String error = (String)request.getAttribute("ERROR");
-                        if (error == null) {
-                            error = "";
-                        }
-                    %>
-                    <%=error%>
+                    ${requestScope.ERROR}
         <%
             }
 }
